@@ -84,6 +84,7 @@ public class SceneManager extends Application {
 //		this.gameEngine.setSurpriseDeck(this.mainBoardController.getSurpriseDeck());
 //		this.gameEngine.setWarrantDeck(this.mainBoardController.getWarrantDeck());
 //        primaryStage.setScene(landingScene);
+//shilo
         primaryStage.show();
 //		userCreatingSceneController.getFinishedInit().addListener((source, oldValue, newValue) -> {
 //			if (newValue) {
