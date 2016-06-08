@@ -3,12 +3,12 @@ package com.monopoly.scenes;
 import com.monopoly.client.ws.DuplicateGameName_Exception;
 import com.monopoly.client.ws.GameDoesNotExists_Exception;
 import com.monopoly.client.ws.InvalidParameters_Exception;
-import com.monopoly.client.ws.MonopolyWebService;
-import com.monopoly.client.ws.MonopolyWebServiceService;
+import com.monopoly.utility.EventTaker;
 import com.monopoly.ws.MonopolyWSClient;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -58,13 +58,13 @@ public class SceneManager extends Application {
         this.loadLandingScreen();
         this.loadCreateGameScene();
         this.loadJoinGameScene();
-        this.loadWaitForGameScene();
-
+        this.loadWaitForGameScene();     
+        
         this.monopolyWS = new MonopolyWSClient();
         this.monopolyWS.createWSClient("localhost", 8080);
         this.monopolyWS.getBoardScheme();
         this.monopolyWS.getBoardXML();
-        this.monopolyWS.createNewGame("Shilo", "S", 1, 3);
+        this.monopolyWS.createNewGame("Shilo", 1, 3);
         this.monopolyWS.addPlayerToGame("Shilo", "adsad");
         this.monopolyWS.getPlayersDetails("Shilo");
 
@@ -86,6 +86,8 @@ public class SceneManager extends Application {
 //        primaryStage.setScene(landingScene);
 //shilo
         primaryStage.show();
+        Timer timer = new Timer();
+        timer.schedule(new EventTaker(this.monopolyWS), 0, 2000);
 //		userCreatingSceneController.getFinishedInit().addListener((source, oldValue, newValue) -> {
 //			if (newValue) {
 //				landingSceneController.activateStartGame(true);

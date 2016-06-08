@@ -5,10 +5,37 @@
  */
 package com.monopoly.client.engine;
 
+import com.monopoly.client.ws.Event;
+import com.monopoly.event.EventManager;
+import com.monopoly.ws.MonopolyWSClient;
+
 /**
  *
  * @author ShiloMangam
  */
 public class ClientEngine {
+
+    private MonopolyWSClient monopolyClient;
+    private EventManager eventManager;
+
+    public ClientEngine(MonopolyWSClient client) {
+        this.monopolyClient = client;
+    }
+
+    public void setEventManager(EventManager eventManager){
+        this.eventManager = eventManager;
+    }
+    public void engineEventHandler(Event event) {
+        switch (event.getType()){
+            case GAME_START:
+                System.out.println("game on!!!");
+                
+                break;
+            default:
+                break;
+        }
+    }
+
+
     
 }

@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class PlayerManager {
     private PlayerModel playerModel;
+    private Player clientPlayer;
 
     public PlayerManager() {
         this.playerModel = new PlayerModel();
@@ -23,6 +24,7 @@ public class PlayerManager {
 
     public void addClientPlayer(Player clientPlayer) {
         this.playerModel.addPlayer(clientPlayer);
+        this.clientPlayer = clientPlayer;
     }
 
     public void removePlayerFromListByName(String name, List<PlayerDetails> playerDetailList) {
@@ -41,6 +43,10 @@ public class PlayerManager {
 
     public HashSet<Player> getPlayers() {
         return this.playerModel.getPlayerModel();
+    }
+
+    public Player getClientPlayer() {
+        return this.clientPlayer;
     }
     
 }

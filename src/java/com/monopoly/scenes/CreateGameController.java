@@ -12,13 +12,10 @@ import com.monopoly.ws.MonopolyWSClient;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -69,7 +66,7 @@ public class CreateGameController implements Initializable {
             }
             this.monopolyWS = this.sceneManager.getMonopolyWS();
             this.monopolyWS.createWSClient(serverAddressText.getText(), Integer.parseInt(portText.getText()));
-            this.monopolyWS.createNewGame(gameNameText.getText(), playerNameText.getText(), Integer.parseInt(humanText.getText()), Integer.parseInt(pcText.getText()));
+            this.monopolyWS.createNewGame(gameNameText.getText(), Integer.parseInt(humanText.getText()), Integer.parseInt(pcText.getText()));
             this.resetInput();
 
             this.sceneManager.showLandingScreen();
