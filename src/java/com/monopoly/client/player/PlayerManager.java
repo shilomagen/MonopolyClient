@@ -7,6 +7,7 @@ package com.monopoly.client.player;
 
 import com.monopoly.client.ws.PlayerDetails;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -44,9 +45,26 @@ public class PlayerManager {
     public HashSet<Player> getPlayers() {
         return this.playerModel.getPlayerModel();
     }
+    
+    public Player getPlayerByName(String name)
+    {
+        for (Iterator<Player> itertor = playerModel.getPlayerModel().iterator(); itertor.hasNext(); ) {
+        Player playerToFind = itertor.next();
+        if (playerToFind.getPlayerName().equals(name))
+            return playerToFind;
+        }
+        return null;
+    }
 
     public Player getClientPlayer() {
         return this.clientPlayer;
+    }
+
+    public void refreshPlayers(List<PlayerDetails> playerDetailList) {
+        for (PlayerDetails iterator : playerDetailList)
+        {
+            this.getPlayerByName(iterator.getName()).setPlayerDetails(iterator);
+        }
     }
     
 }

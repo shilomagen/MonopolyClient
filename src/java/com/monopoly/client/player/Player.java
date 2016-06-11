@@ -91,6 +91,10 @@ public class Player {
     public void setPosition(int position) {
         this.position = position;
     }
+
+    public void setPlayerDetails(PlayerDetails playerDetails) {
+        this.playerDetails = playerDetails;
+    }
     
     
 }

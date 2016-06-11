@@ -17,7 +17,6 @@ import com.monopoly.client.ws.MonopolyWebService;
 import com.monopoly.client.ws.MonopolyWebServiceService;
 import com.monopoly.client.ws.PlayerDetails;
 import com.monopoly.event.EventManager;
-import com.monopoly.utility.EventTaker;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -44,6 +43,7 @@ public class MonopolyWSClient {
     private PlayerManager playerManager;
     private Timer eventTaker;
     private EventManager eventManager;
+    private String GameName;
 
     public MonopolyWSClient() {
         this.clientEngine = new ClientEngine(this);
@@ -51,7 +51,6 @@ public class MonopolyWSClient {
 //        this.eventTaker = new Timer();
         this.eventManager = new EventManager(this.clientEngine);
         this.clientEngine.setEventManager(this.eventManager);
-        
 
     }
 
@@ -59,12 +58,12 @@ public class MonopolyWSClient {
         URL url = new URL("http://" + serverAddress + ":" + serverPort + "/monopolyapi/MonopolyWebServiceService");
         this.monopolyService = new MonopolyWebServiceService(url);
         this.monopoly = this.monopolyService.getMonopolyWebServicePort();
-        
 
     }
 
     public void createNewGame(String gameName, int humanPlayers, int pcPlayers) throws DuplicateGameName_Exception, InvalidParameters_Exception {
         this.monopoly.createGame(pcPlayers, humanPlayers, gameName);
+        
 
     }
 
@@ -129,23 +128,38 @@ public class MonopolyWSClient {
     }
 
     public void getEvents(int eventID) throws InvalidParameters_Exception {
-        
+
         List<Event> eventFromServer;
         eventFromServer = this.monopoly.getEvents(eventID, this.playerManager.getClientPlayer().getPlayerID());
-        if (eventFromServer != null){
+        if (eventFromServer != null) {
             this.eventManager.absorbEventsFromServer(eventFromServer);
         }
-        
-        if (this.eventManager.isThereEventToHandle()){
+
+        if (this.eventManager.isThereEventToHandle()) {
             this.eventManager.handleEvents();
-        }
-        else {
+        } else {
             System.out.println("there is no event to handle");
         }
     }
-    
-    public PlayerManager getPlayerManager(){
+
+    public PlayerManager getPlayerManager() {
         return this.playerManager;
     }
+    public ClientEngine getClientEngine() {
+        return clientEngine;
+    }
+    public void refreshPlayers(String gameName) throws GameDoesNotExists_Exception{
+        List<PlayerDetails> playerDetailList = this.monopoly.getPlayersDetails(gameName);
+        this.playerManager.refreshPlayers(playerDetailList);
+    }
 
+    public String getGameName() {
+        return GameName;
+    }
+
+    public void setGameName(String GameName) {
+        this.GameName = GameName;
+    }
+    
+    
 }

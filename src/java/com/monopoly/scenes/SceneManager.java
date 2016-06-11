@@ -70,6 +70,7 @@ public class SceneManager extends Application {
 //		this.loadUserCreatingScreen();
 //		this.gameEngine = new GameEngine();
         mainBoardController = new MainBoardController(this);
+        monopolyWS.getClientEngine().setMainBoardController(mainBoardController);
         mainBoardController.setPlayersManager(this.monopolyWS.getPlayerManager());
         mainBoardScene = mainBoardController.getMainBoardScene();
         this.mainBoardController.addPlayersToMainBoard();

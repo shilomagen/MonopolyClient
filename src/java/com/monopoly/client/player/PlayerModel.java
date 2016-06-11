@@ -7,6 +7,7 @@ package com.monopoly.client.player;
 
 import com.monopoly.client.ws.PlayerDetails;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -38,4 +39,5 @@ public class PlayerModel {
     public void addPlayer(Player playerToAdd){
         this.playerModel.add(playerToAdd);
     }
+    
 }
