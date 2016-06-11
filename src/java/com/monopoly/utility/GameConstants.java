@@ -15,4 +15,6 @@ public final class GameConstants {
         public static final String SCHEME_FILE_NAME = "monopoly_config.xsd";
         public static final String XML_FILE_NAME = "monopoly_config.xml";
         public static final String RESOURCES_PATH = "/monopoly/ws/resources";
+        public static final String AVATAR_DIR = "players-avatar";
+        public static final String ICON_DIR = "icons";
 }

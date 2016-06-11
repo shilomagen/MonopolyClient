@@ -29,7 +29,6 @@ public class ClientEngine {
         switch (event.getType()){
             case GAME_START:
                 System.out.println("game on!!!");
-                
                 break;
             default:
                 break;

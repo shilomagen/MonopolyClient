@@ -75,14 +75,13 @@ public class MainBoardController {
         return this.mainBoardScene;
     }
 
-//	public void setPlayersManager(PlayersManager playersManager) {
-//		this.playersManager = playersManager;
-//	}
+
     public void addPlayersToMainBoard() {
         this.playersVBox = (VBox) mainBoard.getPlayersAnchorPane().getChildren().get(0);
         for (Player player : playersManager.getPlayers()) {
-            this.movePlayerIconToSpecificCell(GameConstants.START, player);
             this.mainBoard.createPlayerProfile(playersVBox, player);
+            this.setPlayersToStartPosition(player);
+            
         }
         this.mainBoard.getRoot().getChildren().add(this.mainBoard.getPlayersAnchorPane());
 
@@ -94,6 +93,20 @@ public class MainBoardController {
         for (Player player : playersManager.getPlayers()) {
             this.mainBoard.createPlayerProfile(playersVBox, player);
         }
+    }
+
+    public void setPlayersToStartPosition(Player player) {
+        ImageView playerIcon = new ImageView(player.getPlayerIcon());
+        playerIcon.setFitHeight(30);
+        playerIcon.setFitWidth(29);
+        playerIcon.setLayoutY(10);
+        playerIcon.setLayoutX(10);
+        playerIcon.setPickOnBounds(true);
+        playerIcon.setPreserveRatio(true);
+        player.setPosition(GameConstants.BASE_CELL);
+        FlowPane playerBox = mainBoard.getPlayerBox(player.getPosition());
+        playerBox.getChildren().add(playerIcon);
+
     }
 
     public void movePlayerIconToSpecificCell(int diceRes, Player player) {
@@ -223,6 +236,10 @@ public class MainBoardController {
 
     public LinkedList<Card> getWarrantDeck() {
         return this.warrantDeck;
+    }
+
+    public void setPlayersManager(PlayerManager playerManager) {
+        this.playersManager = playerManager;
     }
 
 }

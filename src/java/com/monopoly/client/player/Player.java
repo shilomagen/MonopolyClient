@@ -17,10 +17,12 @@ public class Player {
     private final int playerID;
     private Image playerImage;
     private Image playerIcon;
+    private int position;
     
     public Player(PlayerDetails details, int id){
         this.playerDetails = details;
         this.playerID = id;
+        this.position = 0;
     }
     public Player(PlayerDetails details){
         this.playerDetails = details;
@@ -28,7 +30,8 @@ public class Player {
     }
     
     public boolean isGhostPlayer(){
-        return this.playerID==-1;
+        return this.getPlayerName().contains("ROBOCOP");
+        
     }
     
     
@@ -73,6 +76,20 @@ public class Player {
 
     public String getPlayerName() {
         return this.getPlayerDetails().getName();
+    }
+
+    /**
+     * @return the position
+     */
+    public int getPosition() {
+        return position;
+    }
+
+    /**
+     * @param position the position to set
+     */
+    public void setPosition(int position) {
+        this.position = position;
     }
     
     

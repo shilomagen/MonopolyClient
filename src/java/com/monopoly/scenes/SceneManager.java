@@ -6,8 +6,6 @@ import com.monopoly.client.ws.InvalidParameters_Exception;
 import com.monopoly.utility.EventTaker;
 import com.monopoly.ws.MonopolyWSClient;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 
 import javafx.application.Application;
@@ -59,20 +57,22 @@ public class SceneManager extends Application {
         this.loadCreateGameScene();
         this.loadJoinGameScene();
         this.loadWaitForGameScene();     
-        
+        String namegame="ss22";
         this.monopolyWS = new MonopolyWSClient();
         this.monopolyWS.createWSClient("localhost", 8080);
         this.monopolyWS.getBoardScheme();
         this.monopolyWS.getBoardXML();
-        this.monopolyWS.createNewGame("Shilo", 1, 3);
-        this.monopolyWS.addPlayerToGame("Shilo", "adsad");
-        this.monopolyWS.getPlayersDetails("Shilo");
+        this.monopolyWS.createNewGame(namegame, 2, 3);
+        this.monopolyWS.addPlayerToGame(namegame, "adsad");
+        this.monopolyWS.getPlayersDetails(namegame);
+        
 
 //		this.loadUserCreatingScreen();
 //		this.gameEngine = new GameEngine();
         mainBoardController = new MainBoardController(this);
+        mainBoardController.setPlayersManager(this.monopolyWS.getPlayerManager());
         mainBoardScene = mainBoardController.getMainBoardScene();
-//        this.mainBoardController.addPlayersToMainBoard();
+        this.mainBoardController.addPlayersToMainBoard();
         this.primaryStage.setScene(this.getMainBoardScene());
 
 //		mainBoardController.setPlayersManager(userCreatingSceneController.getPlayersManager());

@@ -143,5 +143,9 @@ public class MonopolyWSClient {
             System.out.println("there is no event to handle");
         }
     }
+    
+    public PlayerManager getPlayerManager(){
+        return this.playerManager;
+    }
 
 }
