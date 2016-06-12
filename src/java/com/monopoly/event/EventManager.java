@@ -10,32 +10,38 @@ import com.monopoly.client.ws.Event;
 import com.monopoly.client.ws.GameDoesNotExists_Exception;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 
 /**
  *
  * @author ShiloMangam
  */
 public class EventManager {
+
     private EventModel eventModel;
     private ClientEngine clientEngine;
-    
 
     public EventManager(ClientEngine clientEngine) {
-         this.eventModel = new EventModel();
-         this.clientEngine = clientEngine;
+        this.eventModel = new EventModel();
+        this.clientEngine = clientEngine;
     }
-    
+
     public int returnLastEventID() {
         return this.eventModel.returnLastEventID();
     }
-    
+
     public void absorbEventsFromServer(List<Event> eventFromServer) {
+
         for (Event event : eventFromServer) {
             this.eventModel.addEventToUnhandledEventList(event);
+
         }
+
     }
-    
-    public void moveFromUnhandledToHandledEventList(){
+
+    public void moveFromUnhandledToHandledEventList() {
         this.eventModel.moveFromUnhandledToHandledEventList();
     }
 
@@ -47,15 +53,12 @@ public class EventManager {
         return this.eventModel.getUnhandledEvents();
     }
 
-   public void handleEvents() throws GameDoesNotExists_Exception, IOException {
-        for (Event event : this.eventModel.getUnhandledEvents()){
-            this.clientEngine.engineEventHandler(event);
-            
+    public void handleEvents() throws GameDoesNotExists_Exception, IOException {
+        for (Event event : this.eventModel.getUnhandledEvents()) {
+            this.clientEngine.addEventToClientEngine(event);
         }
         this.moveFromUnhandledToHandledEventList();
-        
 
     }
-
 
 }

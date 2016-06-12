@@ -47,7 +47,6 @@ public class SceneManager extends Application {
     private Scene mainBoardScene;
     private MainBoardController mainBoardController;
 
-
     @Override
     public void start(Stage primaryStage) throws IOException, DuplicateGameName_Exception, InvalidParameters_Exception, GameDoesNotExists_Exception {
         this.primaryStage = primaryStage;
@@ -92,17 +91,6 @@ public class SceneManager extends Application {
         this.joinGameController.setManager(this);
         this.joinGameScene = new Scene(joinGameLayout);
     }
-//	public void loadUserCreatingScreen() throws IOException {
-//		FXMLLoader loader = new FXMLLoader();
-//		loader.setLocation(SceneManager.class.getResource(USER_CREATING_SCENE_PATH));
-//		userCreatingSceneLayout = loader.load();
-//		userCreatingSceneController = (UserCreatingSceneController) loader.getController();
-//		userCreatingSceneController.setManager(this);
-//		this.userCreatingScene = new Scene(userCreatingSceneLayout);
-//	}
-//	public void showUserCreatingScreen() {
-//		this.primaryStage.setScene(userCreatingScene);
-//	}
 
     public void showLandingScreen() {
         this.primaryStage.setScene(landingScene);
@@ -116,10 +104,6 @@ public class SceneManager extends Application {
         return this.landingScene;
     }
 
-//	public Scene getUserCreationScene() {
-//		return this.userCreatingScene;
-//	}
-//
     public Scene getMainBoardScene() {
         return this.mainBoardScene;
     }
@@ -150,8 +134,6 @@ public class SceneManager extends Application {
     public void setWaitScene() {
         this.primaryStage.setScene(this.waitForGameScene);
     }
-
-
 
     public void setMainBoardScene() {
         this.mainBoardScene = mainBoardController.getMainBoardScene();

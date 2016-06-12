@@ -8,6 +8,7 @@ package com.monopoly.client.engine;
 import com.monopoly.client.player.Player;
 import com.monopoly.client.ws.Event;
 import com.monopoly.client.ws.GameDoesNotExists_Exception;
+import com.monopoly.client.ws.InvalidParameters_Exception;
 import com.monopoly.client.ws.PlayerStatus;
 import com.monopoly.event.EventManager;
 import com.monopoly.scenes.BuyingHousePopupController;
@@ -17,6 +18,12 @@ import com.monopoly.scenes.WinnerSceneController;
 import static com.monopoly.utility.GameConstants.PC_PLAYER_NAME;
 import com.monopoly.ws.MonopolyWSClient;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -35,6 +42,7 @@ public class ClientEngine {
     private BuyingPopupController buyingPopupController;
     private BuyingHousePopupController buyingHousePopupController;
     private WinnerSceneController winnerSceneController;
+    private static ObservableList<Event> eventList;
 
     public ClientEngine(MonopolyWSClient client) {
         this.monopolyClient = client;
@@ -48,16 +56,47 @@ public class ClientEngine {
         this.mainBoardController = mainBoardController;
     }
 
+    public void startObserv() {
+        eventList = FXCollections.observableArrayList();
+        eventList.addListener(new ListChangeListener<Event>() {
+
+            @Override
+            public void onChanged(ListChangeListener.Change c) {
+                while (c.next()) {
+                    if (c.wasAdded()) {
+                        Event event = eventList.get(eventList.size() - 1);
+                        try {
+                            engineEventHandler(event);
+                        } catch (IOException e) {
+                        } catch (GameDoesNotExists_Exception ex) {
+                            Logger.getLogger(ClientEngine.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+
+        });
+
+    }
+
+    public void addEventToClientEngine(Event event){
+        this.eventList.add(event);
+    }
+    
     public void engineEventHandler(Event event) throws GameDoesNotExists_Exception, IOException {
         switch (event.getType()) {
             case GAME_START:
-                
                 this.monopolyClient.startGame();
                 break;
             case GAME_OVER:
+
+                this.monopolyClient.killTimer();
+                System.out.println("GameFinished!");
+
                 // TODO PANE GAME OVER
                 break;
             case GAME_WINNER:
+
                 this.openWinnerScene(event.getPlayerName());
                 break;
             case PLAYER_RESIGNED:
@@ -87,9 +126,9 @@ public class ClientEngine {
                 break;
             case DICE_ROLL:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
-                int firstDiceResault = event.getFirstDiceResult();
-                int secondDiceResault = event.getSecondDiceResult();
-                mainBoardController.updateDice(firstDiceResault, secondDiceResault);
+                int firstDiceResult = event.getFirstDiceResult();
+                int secondDiceResult = event.getSecondDiceResult();
+                mainBoardController.updateDice(firstDiceResult, secondDiceResult);
                 break;
             case MOVE:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
@@ -169,7 +208,7 @@ public class ClientEngine {
         }
     }
 
-    private void openGeneralBuyingPopup(String property, String nameOfProperty, String price, String PlayerName) throws IOException {
+    private void openGeneralBuyingPopup(String property, String nameOfProperty, String price, Event event) throws IOException {
         Popup buyingPopUp = new Popup();
         buyingPopUp.setX(500);
         buyingPopUp.setY(150);
@@ -186,18 +225,23 @@ public class ClientEngine {
         buyingPopUp.show(stage);
         buyingPopupController.getFinish().addListener((source, oldValue, newValue) -> {
             if (newValue) {
-                this.handlePlayerBuyableChoice(this.buyingPopupController);
+                try {
+                    this.handlePlayerBuyableChoice(this.buyingPopupController, event);
+                } catch (InvalidParameters_Exception ex) {
+                    Logger.getLogger(ClientEngine.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 buyingPopUp.hide();
             }
         });
-        if (PlayerName.equals(PC_PLAYER_NAME)) {
+        if (event.getPlayerName().equals(PC_PLAYER_NAME)) {
             this.buyingPopupController.yesButtonOnAction();
         }
 
     }
 
-    private void handlePlayerBuyableChoice(BuyingPopupController buyingPopupController) {
+    private void handlePlayerBuyableChoice(BuyingPopupController buyingPopupController, Event event) throws InvalidParameters_Exception {
         boolean isWantToBuy = buyingPopupController.isWantToBuy();
+        this.monopolyClient.buyAnswer(event.getId(), isWantToBuy);
         //TODO monopolyWeb buy
     }
 
@@ -206,7 +250,7 @@ public class ClientEngine {
         String kindOfProperty = tokens[0];
         String nameOfProperty = tokens[1];
         String priceOfProperty = tokens[2];
-        this.openGeneralBuyingPopup(kindOfProperty, nameOfProperty, priceOfProperty, event.getPlayerName());
+        this.openGeneralBuyingPopup(kindOfProperty, nameOfProperty, priceOfProperty, event);
     }
 
     private void openBuyingHousePopup(String cityName, String price, Event event) throws IOException {

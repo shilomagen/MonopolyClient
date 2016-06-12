@@ -53,6 +53,7 @@ public class MonopolyWSClient {
     private SceneManager sceneManager;
     private Timer timer;
     private MainBoardController mainBoardController;
+    private int playerID;
 
     public MonopolyWSClient(SceneManager _sceneManager) {
         this.clientEngine = new ClientEngine(this);
@@ -81,9 +82,11 @@ public class MonopolyWSClient {
     }
 
     public void addPlayerToGame(String gameName, String playerName) throws GameDoesNotExists_Exception, InvalidParameters_Exception {
-        int playerID = this.monopoly.joinGame(gameName, playerName);
+        this.playerID = this.monopoly.joinGame(gameName, playerName);
         this.clientPlayer = new Player(this.monopoly.getPlayerDetails(playerID), playerID);
         this.playerManager.addClientPlayer(this.clientPlayer);
+        this.clientEngine.setMainBoardController(this.mainBoardController);
+        this.clientEngine.startObserv();
         this.startTakingEvents();
 
     }
@@ -214,6 +217,10 @@ public class MonopolyWSClient {
 
     public String getGameName() {
         return this.gameName;
+    }
+
+    public void buyAnswer(int id, boolean answer) throws InvalidParameters_Exception {
+        this.monopoly.buy(this.playerID, id, answer);
     }
 
 }

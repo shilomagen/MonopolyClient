@@ -30,19 +30,14 @@ public class EventTaker extends TimerTask {
     public void run() {
         Platform.runLater(() -> {
             try {
-                if (this.monopolyClient.isActive() ) {
-                    System.out.println("take events");
-                    try {
-                        this.monopolyClient.getEvents(this.monopolyClient.getLastEvent());
-                    } catch (GameDoesNotExists_Exception ex) {
-                        Logger.getLogger(EventTaker.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IOException ex) {
-                        Logger.getLogger(EventTaker.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else {
-                    //TODO game finished screen!
-                    this.monopolyClient.killTimer();
-                    System.out.println("GameFinished!");
+
+                System.out.println("take events");
+                try {
+                    this.monopolyClient.getEvents(this.monopolyClient.getLastEvent());
+                } catch (GameDoesNotExists_Exception ex) {
+                    Logger.getLogger(EventTaker.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(EventTaker.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } catch (InvalidParameters_Exception ex) {
