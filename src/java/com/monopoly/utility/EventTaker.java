@@ -5,8 +5,10 @@
  */
 package com.monopoly.utility;
 
+import com.monopoly.client.ws.GameDoesNotExists_Exception;
 import com.monopoly.client.ws.InvalidParameters_Exception;
 import com.monopoly.ws.MonopolyWSClient;
+import java.io.IOException;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +32,13 @@ public class EventTaker extends TimerTask {
             try {
                 if (this.monopolyClient.isActive() ) {
                     System.out.println("take events");
-                    this.monopolyClient.getEvents(this.monopolyClient.getLastEvent());
+                    try {
+                        this.monopolyClient.getEvents(this.monopolyClient.getLastEvent());
+                    } catch (GameDoesNotExists_Exception ex) {
+                        Logger.getLogger(EventTaker.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(EventTaker.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } else {
                     //TODO game finished screen!
                     this.monopolyClient.killTimer();
