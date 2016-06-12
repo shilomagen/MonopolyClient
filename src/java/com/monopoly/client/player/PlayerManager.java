@@ -17,6 +17,7 @@ import java.util.List;
 public class PlayerManager {
     private PlayerModel playerModel;
     private Player clientPlayer;
+    private int playerPositionOnPlayerVBox = 0;
 
     public PlayerManager() {
         this.playerModel = new PlayerModel();
@@ -24,6 +25,8 @@ public class PlayerManager {
     }
 
     public void addClientPlayer(Player clientPlayer) {
+        clientPlayer.setPositionOnPlayerVBox(playerPositionOnPlayerVBox);
+        this.playerPositionOnPlayerVBox++;
         this.playerModel.addPlayer(clientPlayer);
         this.clientPlayer = clientPlayer;
     }
@@ -38,7 +41,12 @@ public class PlayerManager {
     public void addGhostPlayersWithoutClientPlayer(List<PlayerDetails> playerDetailList, String name) {
         for (int i=0;i<playerDetailList.size();++i){
              if (!playerDetailList.get(i).getName().equals(name))
-                 this.playerModel.addPlayer(new Player(playerDetailList.get(i)));
+             {
+                 Player playerToAdd = new Player(playerDetailList.get(i));
+                 playerToAdd.setPositionOnPlayerVBox(playerPositionOnPlayerVBox);
+                 this.playerPositionOnPlayerVBox++;
+                 this.playerModel.addPlayer(playerToAdd);
+             }
         }
     }
 

@@ -127,7 +127,7 @@ public class MonopolyWSClient {
         return this.eventManager.returnLastEventID();
     }
 
-    public void getEvents(int eventID) throws InvalidParameters_Exception {
+    public void getEvents(int eventID) throws InvalidParameters_Exception, IOException, GameDoesNotExists_Exception {
 
         List<Event> eventFromServer;
         eventFromServer = this.monopoly.getEvents(eventID, this.playerManager.getClientPlayer().getPlayerID());

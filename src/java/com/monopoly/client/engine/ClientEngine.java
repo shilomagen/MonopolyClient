@@ -13,13 +13,12 @@ import com.monopoly.event.EventManager;
 import com.monopoly.scenes.BuyingHousePopupController;
 import com.monopoly.scenes.BuyingPopupController;
 import com.monopoly.scenes.MainBoardController;
+import com.monopoly.scenes.WinnerSceneController;
 import static com.monopoly.utility.GameConstants.PC_PLAYER_NAME;
 import com.monopoly.ws.MonopolyWSClient;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -35,6 +34,7 @@ public class ClientEngine {
     private MainBoardController mainBoardController;
     private BuyingPopupController buyingPopupController;
     private BuyingHousePopupController buyingHousePopupController;
+    private WinnerSceneController winnerSceneController;
 
     public ClientEngine(MonopolyWSClient client) {
         this.monopolyClient = client;
@@ -57,7 +57,7 @@ public class ClientEngine {
                 // TODO PANE GAME OVER
                 break;
             case GAME_WINNER:
-                // TODO PANE GAME WINNER
+                this.openWinnerScene(event.getPlayerName());
                 break;
             case PLAYER_RESIGNED:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
@@ -70,7 +70,6 @@ public class ClientEngine {
                 mainBoardController.refreshPlayersOnMainBoard();
                 mainBoardController.removePlayerIconFromBoard(playerResigned);
                 mainBoardController.showMessage(event.getEventMessage());
-                // delete owner from all the propertys
                 break;
             case PLAYER_LOST:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
@@ -119,12 +118,56 @@ public class ClientEngine {
             case GO_TO_JAIL:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
                 mainBoardController.showMessage(event.getEventMessage());
+                mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), false);
+                mainBoardController.refreshPlayersOnMainBoard();
                 break;
             case PROPMT_PLAYER_TO_BY_ASSET:
                 this.showBuyingAssetQuestion(event);
                 break;
             case PROPMPT_PLAYER_TO_BY_HOUSE:
                 this.showBuyingHouseQuestion(event);
+                break;
+            case ASSET_BOUGHT:
+                monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.showMessage(event.getEventMessage());
+                mainBoardController.refreshPlayersOnMainBoard();
+                break;
+            case HOUSE_BOUGHT:
+                monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.showMessage(event.getEventMessage());
+                mainBoardController.refreshPlayersOnMainBoard();
+                break;
+            case SURPRISE_CARD:
+                monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.showMessage(event.getEventMessage());
+                mainBoardController.refreshPlayersOnMainBoard();
+                break;
+            case WARRANT_CARD:
+                monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.showMessage(event.getEventMessage());
+                mainBoardController.refreshPlayersOnMainBoard();
+                break;
+            case GET_OUT_OF_JAIL_CARD:
+                monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.showMessage(event.getEventMessage());
+                mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), true);
+                mainBoardController.refreshPlayersOnMainBoard();
+            case PAYMENT:
+                monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                if (event.isPaymemtFromUser())
+                {
+                    mainBoardController.showMessage(event.getPlayerName() + "Paid to " + event.getPaymentToPlayerName()+ " " + event.getPaymentAmount() + "$");
+                }
+                else 
+                {
+                    mainBoardController.showMessage(event.getPaymentToPlayerName() + "Paid to " + event.getPlayerName()+ " " + event.getPaymentAmount() + "$");
+                }
+                break;
+            case PLAYER_USED_GET_OUT_OF_JAIL_CARD:
+                monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.showMessage(event.getEventMessage());
+                mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), true);
+                mainBoardController.refreshPlayersOnMainBoard();
             default:
                 break;
         }
@@ -160,7 +203,7 @@ public class ClientEngine {
         
 	private void handlePlayerBuyableChoice(BuyingPopupController buyingPopupController) {
 		boolean isWantToBuy = buyingPopupController.isWantToBuy();
-		//monopolyWeb buy
+		//TODO monopolyWeb buy
 	}
         private void showBuyingAssetQuestion(Event event) throws IOException
         {
@@ -213,4 +256,19 @@ public class ClientEngine {
             String price = tokens[1];
             this.openBuyingHousePopup(cityName, price, event);
         }
+        
+        private void openWinnerScene(String winnerPlayerName) throws IOException {
+            FXMLLoader load = new FXMLLoader();
+            load.setLocation(MainBoardController.class.getResource("WinnerScene.fxml"));
+            Pane WinnerScenePane = load.load();
+            this.winnerSceneController = new WinnerSceneController();
+            this.winnerSceneController = (WinnerSceneController) load.getController();
+            this.winnerSceneController.setWinnerName(winnerPlayerName);
+            Stage stage = (Stage) this.mainBoardController.getMainBoardScene().getWindow();
+            Scene scene = new Scene(WinnerScenePane);
+            stage.setScene(scene);
+            stage.show();
+    }
+
+        
 }
