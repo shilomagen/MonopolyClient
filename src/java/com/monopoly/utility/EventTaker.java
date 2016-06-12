@@ -28,7 +28,7 @@ public class EventTaker extends TimerTask {
     public void run() {
         Platform.runLater(() -> {
             try {
-                if (this.monopolyClient.isActive()) {
+                if (this.monopolyClient.isActive() ) {
                     System.out.println("take events");
                     this.monopolyClient.getEvents(this.monopolyClient.getLastEvent());
                 } else {

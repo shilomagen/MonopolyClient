@@ -8,6 +8,7 @@ package com.monopoly.client.engine;
 import com.monopoly.client.ws.Event;
 import com.monopoly.event.EventManager;
 import com.monopoly.ws.MonopolyWSClient;
+import javafx.application.Platform;
 
 /**
  *
@@ -29,7 +30,10 @@ public class ClientEngine {
         switch (event.getType()){
             case GAME_START:
                 System.out.println("game on!!!");
-                this.monopolyClient.startGame();
+                Platform.runLater(()->{
+                    this.monopolyClient.startGame();
+                });
+                
                 break;
             default:
                 System.out.println(event.getType().toString());
