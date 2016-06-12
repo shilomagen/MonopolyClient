@@ -109,19 +109,18 @@ public class MainBoardController {
 
     }
 
-    public void movePlayerIconToSpecificCell(int diceRes, Player player) {
-//		int newLocation = (player.getPosition() + diceRes) % GameConstants.TOTAL_CELL;
-//		this.removePlayerIconFromBoard(player);
-//		ImageView icon = new ImageView(player.getData().getIcon());
-//		icon.setFitHeight(30);
-//		icon.setFitWidth(29);
-//		icon.setLayoutY(10);
-//		icon.setLayoutX(10);
-//		icon.setPickOnBounds(true);
-//		icon.setPreserveRatio(true);
-//		player.setPosition(newLocation);
-//		FlowPane playerBox = mainBoard.getPlayerBox(newLocation);
-//		playerBox.getChildren().add(icon);
+    public void movePlayerIconToSpecificCell(int newLocation, Player player) {
+		this.removePlayerIconFromBoard(player);
+		ImageView icon = new ImageView(player.getPlayerIcon());
+		icon.setFitHeight(30);
+		icon.setFitWidth(29);
+		icon.setLayoutY(10);
+		icon.setLayoutX(10);
+		icon.setPickOnBounds(true);
+		icon.setPreserveRatio(true);
+		player.setPosition(newLocation);
+		FlowPane playerBox = mainBoard.getPlayerBox(newLocation);
+		playerBox.getChildren().add(icon);
     }
 
     public void addHouseToSpecificCell(int location) {
@@ -216,16 +215,16 @@ public class MainBoardController {
     }
 
     public void removePlayerIconFromBoard(Player player) {
-//		int currentPlayerPositionToDelete = player.getPosition();
-//		FlowPane currentPlayerBox = mainBoard.getPlayerBox(currentPlayerPositionToDelete);
-//		ImageView currentImageView = this.findImageViewByImage(currentPlayerBox, player.getData().getIcon());
-//		try {
-//			if (currentImageView != null)
-//				currentPlayerBox.getChildren().remove(currentImageView);
-//		} catch (UnsupportedOperationException e){
-//			e.printStackTrace();
-//			
-//		}
+		int currentPlayerPositionToDelete = player.getPosition();
+		FlowPane currentPlayerBox = mainBoard.getPlayerBox(currentPlayerPositionToDelete);
+		ImageView currentImageView = this.findImageViewByImage(currentPlayerBox, player.getPlayerIcon());
+		try {
+			if (currentImageView != null)
+				currentPlayerBox.getChildren().remove(currentImageView);
+		} catch (UnsupportedOperationException e){
+			e.printStackTrace();
+			
+		}
 
         // else, player is already bankrupt and he's not on the cell
     }

@@ -7,6 +7,8 @@ package com.monopoly.event;
 
 import com.monopoly.client.engine.ClientEngine;
 import com.monopoly.client.ws.Event;
+import com.monopoly.client.ws.GameDoesNotExists_Exception;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -45,7 +47,7 @@ public class EventManager {
         return this.eventModel.getUnhandledEvents();
     }
 
-   public void handleEvents() {
+   public void handleEvents() throws GameDoesNotExists_Exception, IOException {
         for (Event event : this.eventModel.getUnhandledEvents()){
             this.clientEngine.engineEventHandler(event);
             

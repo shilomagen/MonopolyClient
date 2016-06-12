@@ -141,7 +141,7 @@ public class MonopolyWSClient {
         return this.eventManager.returnLastEventID();
     }
 
-    public void getEvents(int eventID) throws InvalidParameters_Exception {
+    public void getEvents(int eventID) throws InvalidParameters_Exception, GameDoesNotExists_Exception, IOException {
 
         List<Event> eventFromServer;
         eventFromServer = this.monopoly.getEvents(eventID, this.playerManager.getClientPlayer().getPlayerID());
@@ -158,6 +158,13 @@ public class MonopolyWSClient {
 
     public PlayerManager getPlayerManager() {
         return this.playerManager;
+    }
+    public ClientEngine getClientEngine() {
+        return clientEngine;
+    }
+    public void refreshPlayers(String gameName) throws GameDoesNotExists_Exception{
+        List<PlayerDetails> playerDetailList = this.monopoly.getPlayersDetails(gameName);
+        this.playerManager.refreshPlayers(playerDetailList);
     }
 
     public boolean isActive() {
@@ -203,6 +210,10 @@ public class MonopolyWSClient {
      */
     public void setMainBoardController(MainBoardController mainBoardController) {
         this.mainBoardController = mainBoardController;
+    }
+
+    public String getGameName() {
+        return this.gameName;
     }
 
 }

@@ -771,8 +771,8 @@ public class Monopoly {
          * <p>
          * You are getting this "catch-all" property because of the following reason: 
          * The field name "Square" is used by two different parts of a schema. See: 
-         * line 243 of file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/conf/xml-resources/jaxb/MonopolyScheme/monopoly_config.xsd
-         * line 241 of file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/conf/xml-resources/jaxb/MonopolyScheme/monopoly_config.xsd
+         * line 243 of file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/conf/xml-resources/jaxb/MonopolyScheme/monopoly_config.xsd
+         * line 241 of file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/conf/xml-resources/jaxb/MonopolyScheme/monopoly_config.xsd
          * <p>
          * To get rid of this property, apply a property customization to one 
          * of both of the following declarations to change their names: 
@@ -798,6 +798,7 @@ public class Monopoly {
          * {@link JAXBElement }{@code <}{@link ParkingSquareType }{@code >}
          * {@link JAXBElement }{@code <}{@link SquareType }{@code >}
          * {@link JAXBElement }{@code <}{@link StartSquareType }{@code >}
+         * {@link JAXBElement }{@code <}{@link JailSlashFreeSpaceSquareType }{@code >}
          * 
          * 
          */

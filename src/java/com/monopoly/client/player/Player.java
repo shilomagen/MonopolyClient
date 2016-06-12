@@ -18,6 +18,7 @@ public class Player {
     private Image playerImage;
     private Image playerIcon;
     private int position;
+    private int positionOnPlayerVBox;
     
     public Player(PlayerDetails details, int id){
         this.playerDetails = details;
@@ -90,6 +91,18 @@ public class Player {
      */
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public void setPlayerDetails(PlayerDetails playerDetails) {
+        this.playerDetails = playerDetails;
+    }
+
+    public void setPositionOnPlayerVBox(int positionOnPlayerVBox) {
+        this.positionOnPlayerVBox = positionOnPlayerVBox;
+    }
+
+    public int getPositionOnPlayerVBox() {
+        return positionOnPlayerVBox;
     }
     
     
