@@ -46,8 +46,7 @@ public class SceneManager extends Application {
 //	private Pane userCreatingSceneLayout;
     private Scene mainBoardScene;
     private MainBoardController mainBoardController;
-//	private BooleanProperty finishedInit = new SimpleBooleanProperty(this, "Finish Init");
-//	private GameEngine gameEngine;
+
 
     @Override
     public void start(Stage primaryStage) throws IOException, DuplicateGameName_Exception, InvalidParameters_Exception, GameDoesNotExists_Exception {
@@ -56,49 +55,11 @@ public class SceneManager extends Application {
         this.loadLandingScreen();
         this.loadCreateGameScene();
         this.loadJoinGameScene();
-        this.loadWaitForGameScene();     
-        String namegame="ss22";
-        this.monopolyWS = new MonopolyWSClient();
-        this.monopolyWS.createWSClient("localhost", 8080);
-        this.monopolyWS.getBoardScheme();
-        this.monopolyWS.getBoardXML();
-        this.monopolyWS.createNewGame(namegame, 2, 3);
-        this.monopolyWS.addPlayerToGame(namegame, "adsad");
-        this.monopolyWS.getPlayersDetails(namegame);
-        
-
-//		this.loadUserCreatingScreen();
-//		this.gameEngine = new GameEngine();
-        mainBoardController = new MainBoardController(this);
-        mainBoardController.setPlayersManager(this.monopolyWS.getPlayerManager());
-        mainBoardScene = mainBoardController.getMainBoardScene();
-        this.mainBoardController.addPlayersToMainBoard();
-        this.primaryStage.setScene(this.getMainBoardScene());
-
-//		mainBoardController.setPlayersManager(userCreatingSceneController.getPlayersManager());
-//		mainBoardController.setGameEngine(this.gameEngine);
-//		mainBoardController.registerButtonEvents();
-//		this.gameEngine.setMainBoardController(this.mainBoardController);
-//		this.gameEngine.setPlayersManager(userCreatingSceneController.getPlayersManager());
-//		this.gameEngine.setCellModel(this.mainBoardController.getCellModel());
-//		this.gameEngine.setSurpriseDeck(this.mainBoardController.getSurpriseDeck());
-//		this.gameEngine.setWarrantDeck(this.mainBoardController.getWarrantDeck());
-//        primaryStage.setScene(landingScene);
-//shilo
+        this.loadWaitForGameScene();
+        this.monopolyWS = new MonopolyWSClient(this);
+        primaryStage.setScene(landingScene);
         primaryStage.show();
-        Timer timer = new Timer();
-        timer.schedule(new EventTaker(this.monopolyWS), 0, 2000);
-//		userCreatingSceneController.getFinishedInit().addListener((source, oldValue, newValue) -> {
-//			if (newValue) {
-//				landingSceneController.activateStartGame(true);
-//			}
-//		});
-//		this.landingSceneController.getStartGame().addListener((source, oldValue, newValue) -> {
-//			if (newValue){
-//				this.gameEngine.startObserv();	
-//				this.gameEngine.addEventToEngine(EventTypes.PLAY_TURN);
-//			}
-//		});
+
     }
 
     public Stage getPrimaryStage() {
@@ -188,6 +149,20 @@ public class SceneManager extends Application {
 
     public void setWaitScene() {
         this.primaryStage.setScene(this.waitForGameScene);
+    }
+
+
+
+    public void setMainBoardScene() {
+        this.mainBoardScene = mainBoardController.getMainBoardScene();
+        this.primaryStage.setScene(this.mainBoardScene);
+    }
+
+    /**
+     * @param mainBoardController the mainBoardController to set
+     */
+    public void setMainBoardController(MainBoardController mainBoardController) {
+        this.mainBoardController = mainBoardController;
     }
 
 }

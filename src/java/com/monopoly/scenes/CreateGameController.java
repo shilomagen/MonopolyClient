@@ -32,8 +32,6 @@ public class CreateGameController implements Initializable {
     @FXML
     private TextField portText;
     @FXML
-    private TextField playerNameText;
-    @FXML
     private TextField humanText;
     @FXML
     private TextField pcText;
@@ -68,7 +66,6 @@ public class CreateGameController implements Initializable {
             this.monopolyWS.createWSClient(serverAddressText.getText(), Integer.parseInt(portText.getText()));
             this.monopolyWS.createNewGame(gameNameText.getText(), Integer.parseInt(humanText.getText()), Integer.parseInt(pcText.getText()));
             this.resetInput();
-
             this.sceneManager.showLandingScreen();
 
         } catch (DuplicateGameName_Exception | InvalidParameters_Exception | InfoMissingException | MalformedURLException ex) {
@@ -95,7 +92,6 @@ public class CreateGameController implements Initializable {
     private void resetInput() {
         this.serverAddressText.setText("");
         this.portText.setText("");
-        this.playerNameText.setText("");
         this.gameNameText.setText("");
         this.humanText.setText("");
         this.pcText.setText("");

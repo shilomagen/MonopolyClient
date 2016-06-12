@@ -29,8 +29,10 @@ public class ClientEngine {
         switch (event.getType()){
             case GAME_START:
                 System.out.println("game on!!!");
+                this.monopolyClient.startGame();
                 break;
             default:
+                System.out.println(event.getType().toString());
                 break;
         }
     }

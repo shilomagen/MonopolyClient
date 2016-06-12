@@ -34,7 +34,7 @@ public class EventModel {
     }
     
     public int returnLastEventID(){
-       return this.handledEvents.isEmpty() ? 0 : this.handledEvents.get(this.handledEvents.size()-1).getId()+1;
+       return this.handledEvents.isEmpty() ? 0 : this.handledEvents.get(this.handledEvents.size()-1).getId();
     }
 
     void moveFromUnhandledToHandledEventList() {

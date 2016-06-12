@@ -86,8 +86,8 @@ public interface MonopolyWebService {
      * @param humanPlayers
      * @param name
      * @param computerizedPlayers
-     * @throws InvalidParameters_Exception
      * @throws DuplicateGameName_Exception
+     * @throws InvalidParameters_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "createGame", targetNamespace = "http://monopoly.ws/", className = "com.monopoly.client.ws.CreateGame")
@@ -129,8 +129,8 @@ public interface MonopolyWebService {
      * @param playerName
      * @return
      *     returns int
-     * @throws InvalidParameters_Exception
      * @throws GameDoesNotExists_Exception
+     * @throws InvalidParameters_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -165,8 +165,8 @@ public interface MonopolyWebService {
      * @param playerId
      * @return
      *     returns com.monopoly.client.ws.PlayerDetails
-     * @throws InvalidParameters_Exception
      * @throws GameDoesNotExists_Exception
+     * @throws InvalidParameters_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
