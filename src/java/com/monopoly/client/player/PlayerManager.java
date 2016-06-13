@@ -71,7 +71,11 @@ public class PlayerManager {
     public void refreshPlayers(List<PlayerDetails> playerDetailList) {
         for (PlayerDetails iterator : playerDetailList)
         {
-            this.getPlayerByName(iterator.getName()).setPlayerDetails(iterator);
+            String playerName = iterator.getName();
+            this.getPlayerByName(playerName).setPlayerDetails(iterator);
+            Player playerToRefresh = this.getPlayerByName(playerName);
+            playerToRefresh.setPlayerIcon(this.getPlayerByName(playerName).getPlayerIcon());
+            playerToRefresh.setPlayerImage(this.getPlayerByName(playerName).getPlayerImage());
         }
     }
     

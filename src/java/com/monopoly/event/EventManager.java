@@ -64,7 +64,7 @@ public class EventManager {
                     Logger.getLogger(EventManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
-            Thread.sleep(1000);
+            Thread.sleep(700);
             
         }
         this.moveFromUnhandledToHandledEventList();

@@ -3,15 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/java/com/monopoly/scenes/JoinGameController.java</file>
-            <file>file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/java/com/monopoly/event/EventManager.java</file>
-            <file>file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/java/com/monopoly/scenes/CreateGameController.java</file>
-            <file>file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/java/com/monopoly/scenes/SceneManager.java</file>
-            <file>file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/java/com/monopoly/client/engine/GameBoard.java</file>
-            <file>file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/java/com/monopoly/ws/MonopolyWSClient.java</file>
-            <file>file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/conf/xml-resources/jaxb/MonopolyScheme/monopoly_config.xsd</file>
-            <file>file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/java/com/monopoly/utility/EventTaker.java</file>
-            <file>file:/Users/ShiloMangam/Documents/workspace/MonopolyClient/src/java/com/monopoly/client/engine/ClientEngine.java</file>
+            <file>file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/java/com/monopoly/ws/MonopolyWSClient.java</file>
+            <file>file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/java/com/monopoly/client/player/PlayerModel.java</file>
+            <file>file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/java/com/monopoly/event/EventManager.java</file>
+            <file>file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/java/com/monopoly/client/player/PlayerManager.java</file>
+            <file>file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/java/com/monopoly/client/engine/ClientEngine.java</file>
+            <file>file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/java/com/monopoly/scenes/MainBoardController.java</file>
+            <file>file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/java/com/monopoly/scenes/JoinGameController.java</file>
+            <file>file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/java/com/monopoly/client/player/Player.java</file>
+            <file>file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/java/com/monopoly/scenes/MainBoard.java</file>
+            <file>file:/Users/Eden/Desktop/java-projects/targil3/MonopolyClient/src/java/com/monopoly/utility/GameConstants.java</file>
         </group>
     </open-files>
 </project-private>
