@@ -42,7 +42,7 @@ public class ClientEngine {
     private BuyingPopupController buyingPopupController;
     private BuyingHousePopupController buyingHousePopupController;
     private WinnerSceneController winnerSceneController;
-    private static ObservableList<Event> eventList;
+   
 
     public ClientEngine(MonopolyWSClient client) {
         this.monopolyClient = client;
@@ -56,34 +56,12 @@ public class ClientEngine {
         this.mainBoardController = mainBoardController;
     }
 
-    public void startObserv() {
-        eventList = FXCollections.observableArrayList();
-        eventList.addListener(new ListChangeListener<Event>() {
+    
 
-            @Override
-            public void onChanged(ListChangeListener.Change c) {
-                while (c.next()) {
-                    if (c.wasAdded()) {
-                        Event event = eventList.get(eventList.size() - 1);
-                        try {
-                            engineEventHandler(event);
-                        } catch (IOException e) {
-                        } catch (GameDoesNotExists_Exception ex) {
-                            Logger.getLogger(ClientEngine.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-            }
-
-        });
-
-    }
-
-    public void addEventToClientEngine(Event event){
-        this.eventList.add(event);
-    }
+    
     
     public void engineEventHandler(Event event) throws GameDoesNotExists_Exception, IOException {
+        
         switch (event.getType()) {
             case GAME_START:
                 this.monopolyClient.startGame();

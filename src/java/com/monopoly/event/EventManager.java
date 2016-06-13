@@ -53,9 +53,19 @@ public class EventManager {
         return this.eventModel.getUnhandledEvents();
     }
 
-    public void handleEvents() throws GameDoesNotExists_Exception, IOException {
+    public void handleEvents() throws GameDoesNotExists_Exception, IOException, InterruptedException {
         for (Event event : this.eventModel.getUnhandledEvents()) {
-            this.clientEngine.addEventToClientEngine(event);
+            Platform.runLater(()->{
+                try {
+                    this.clientEngine.engineEventHandler(event);
+                } catch (GameDoesNotExists_Exception ex) {
+                    Logger.getLogger(EventManager.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(EventManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            Thread.sleep(1000);
+            
         }
         this.moveFromUnhandledToHandledEventList();
 

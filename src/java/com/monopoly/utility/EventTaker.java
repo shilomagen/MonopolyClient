@@ -28,23 +28,20 @@ public class EventTaker extends TimerTask {
 
     @Override
     public void run() {
-        Platform.runLater(() -> {
+
+        try {
+
+            System.out.println("take events");
             try {
-
-                System.out.println("take events");
-                try {
-                    this.monopolyClient.getEvents(this.monopolyClient.getLastEvent());
-                } catch (GameDoesNotExists_Exception ex) {
-                    Logger.getLogger(EventTaker.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(EventTaker.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            } catch (InvalidParameters_Exception ex) {
-                System.out.println("error");
+                this.monopolyClient.getEvents(this.monopolyClient.getLastEvent());
+            } catch (GameDoesNotExists_Exception | IOException | InterruptedException ex) {
+                Logger.getLogger(EventTaker.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        });
+        } catch (InvalidParameters_Exception ex) {
+            System.out.println("error");
+        }
+      
 
     }
 
