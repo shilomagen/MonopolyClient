@@ -64,8 +64,9 @@ public class MonopolyWSClient {
 
     }
 
-    public void createWSClient(String serverAddress, int serverPort) throws MalformedURLException {
+    public void createWSClient(String serverAddress, int serverPort) throws MalformedURLException, RuntimeException {
         URL url = new URL("http://" + serverAddress + ":" + serverPort + "/monopolyapi/MonopolyWebServiceService");
+        
         this.monopolyService = new MonopolyWebServiceService(url);
         this.monopoly = this.monopolyService.getMonopolyWebServicePort();
 

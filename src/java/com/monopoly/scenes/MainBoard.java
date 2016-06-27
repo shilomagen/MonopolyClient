@@ -437,15 +437,15 @@ public class MainBoard {
         rightDie.setPickOnBounds(true);
         rightDie.setImage(new Image("file:src/com/monopoly/assets/dice/dice-1.png"));
 
-        this.rollButton = new Button("Roll");
-        rollButton.setLayoutX(80);
-        rollButton.setLayoutY(30);
-        rollButton.setMnemonicParsing(false);
-        rollButton.setOnAction((event) -> {
+//        this.rollButton = new Button("Roll");
+//        rollButton.setLayoutX(80);
+//        rollButton.setLayoutY(30);
+//        rollButton.setMnemonicParsing(false);
+//        rollButton.setOnAction((event) -> {
+//
+//        });
 
-        });
-
-        dicePane.getChildren().addAll(leftDie, rightDie, rollButton);
+        dicePane.getChildren().addAll(leftDie, rightDie);
 
         this.screenConsole = new Label("");
         screenConsole.setId("screen-console");
@@ -939,6 +939,68 @@ public class MainBoard {
     private String getImageCounter() {
         imageCounter++;
         return imageCounter + "";
+
+    }
+    
+    public void refreshPlayerProfile(VBox playersPane, Player player) {
+
+        URL csdURL = MainBoard.class.getResource(File.separator + "com" + File.separator + "monopoly" + File.separator + "assets" + File.separator);
+        String imageUrl;
+        String iconUrl;
+        Pane playerProfile = new Pane();
+        playerProfile.setPrefSize(200.0, 128.0);
+        playerProfile.setId(player.getPlayerDetails().getName() + "-player");
+
+        ImageView playerAvatar = new ImageView();
+        
+        player.setPlayerImage(player.getPlayerImage());
+        playerAvatar.setImage(player.getPlayerImage());
+        playerAvatar.setFitHeight(70.0);
+        playerAvatar.setFitWidth(69.0);
+        playerAvatar.setLayoutY(7.0);
+        playerAvatar.setLayoutX(60);
+        playerAvatar.setPickOnBounds(true);
+        playerAvatar.setPreserveRatio(true);
+
+        player.setPlayerIcon(player.getPlayerIcon());
+        ImageView playerIcon = new ImageView();
+
+        playerIcon.setImage(player.getPlayerIcon());
+        playerIcon.setFitHeight(40.0);
+        playerIcon.setFitWidth(39.0);
+        playerIcon.setLayoutY(10.0);
+        playerIcon.setLayoutX(10);
+        playerIcon.setPickOnBounds(true);
+        playerIcon.setPreserveRatio(true);
+
+        Label playerName = new Label(player.getPlayerDetails().getName());
+        playerName.setAlignment(Pos.CENTER);
+        playerName.setLayoutX(1.0);
+        playerName.setLayoutY(85.0);
+        playerName.setPrefSize(187.0, 17.0);
+
+        Label playerMoney = new Label(player.getPlayerDetails().getMoney() + "$");
+        playerMoney.setAlignment(Pos.CENTER);
+        playerMoney.setLayoutX(1.0);
+        playerMoney.setLayoutY(105.0);
+        playerMoney.setPrefSize(187.0, 17.0);
+
+        ImageView playerStatus;
+        if (player.getPlayerDetails().getStatus() == PlayerStatus.RETIRED) {
+            playerStatus = new ImageView(BoardConsts.IMAGE_URL + "/player-off.png");
+        } else {
+            playerStatus = new ImageView(BoardConsts.IMAGE_URL + "/player-on.png");
+        }
+        playerStatus.setFitHeight(17.0);
+        playerStatus.setFitWidth(15.0);
+        playerStatus.setLayoutX(169.0);
+        playerStatus.setLayoutY(4.0);
+        playerStatus.setId(player.getPlayerDetails().getName() + "-status");
+        playerStatus.setPickOnBounds(true);
+        playerStatus.setPreserveRatio(true);
+
+        playerProfile.getChildren().addAll(playerAvatar, playerIcon, playerName, playerMoney, playerStatus);
+        playersPane.getChildren().add(playerProfile);
 
     }
 }

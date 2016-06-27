@@ -62,15 +62,25 @@ public class CreateGameController implements Initializable {
             if (this.serverAddressText.getText().trim().isEmpty() || this.portText.getText().trim().isEmpty()) {
                 throw new InfoMissingException();
             }
+            
             this.monopolyWS = this.sceneManager.getMonopolyWS();
             this.monopolyWS.createWSClient(serverAddressText.getText(), Integer.parseInt(portText.getText()));
-            this.monopolyWS.createNewGame(gameNameText.getText(), Integer.parseInt(humanText.getText()), Integer.parseInt(pcText.getText()));
-            this.resetInput();
-            this.sceneManager.showLandingScreen();
+           
+                this.monopolyWS.createNewGame(gameNameText.getText(), Integer.parseInt(humanText.getText()), Integer.parseInt(pcText.getText()));
+                this.resetInput();
+                this.sceneManager.showLandingScreen();
+           
+            
 
-        } catch (DuplicateGameName_Exception | InvalidParameters_Exception | InfoMissingException | MalformedURLException ex) {
-
-            this.showError(ex.getMessage());
+        } catch (DuplicateGameName_Exception | InvalidParameters_Exception | InfoMissingException | MalformedURLException | NumberFormatException  ex) {
+            if (ex.getClass().getName().contains("NumberFormatException")){
+                this.showError("Invalid Input Numbers!");
+            }
+            else {
+                this.showError(ex.getMessage());
+            }
+        } catch (RuntimeException ex){
+            this.showError("Error connecting the server!");
         }
     }
 

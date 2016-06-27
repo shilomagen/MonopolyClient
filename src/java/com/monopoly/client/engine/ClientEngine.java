@@ -104,12 +104,16 @@ public class ClientEngine {
                 break;
             case DICE_ROLL:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.refreshPlayersOnMainBoard();
+                mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), true);
                 int firstDiceResult = event.getFirstDiceResult();
                 int secondDiceResult = event.getSecondDiceResult();
                 mainBoardController.updateDice(firstDiceResult, secondDiceResult);
                 break;
             case MOVE:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.refreshPlayersOnMainBoard();
+                mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), true);
                 boolean canMove = event.isPlayerMove();
                 if (canMove) {
                     int placeToMove = event.getNextBoardSquareID();
@@ -117,30 +121,42 @@ public class ClientEngine {
                             getPlayerManager().getPlayerByName(event.getPlayerName()));
                     monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).setPosition(placeToMove);
                 } else {
+                    mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), false);
                     mainBoardController.showMessage(event.getEventMessage());
                 }
                 break;
             case PASSED_START_SQUARE:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.refreshPlayersOnMainBoard();
+                mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), true);
                 mainBoardController.showMessage(event.getEventMessage());
                 mainBoardController.refreshPlayersOnMainBoard();
                 break;
             case LANDED_ON_START_SQUARE:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.refreshPlayersOnMainBoard();
+                mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), true);
                 mainBoardController.showMessage(event.getEventMessage());
                 mainBoardController.refreshPlayersOnMainBoard();
                 break;
             case GO_TO_JAIL:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.refreshPlayersOnMainBoard();
                 mainBoardController.showMessage(event.getEventMessage());
                 mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), false);
                 mainBoardController.refreshPlayersOnMainBoard();
                 break;
             case PROPMT_PLAYER_TO_BY_ASSET:
+                mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), true);
                 this.showBuyingAssetQuestion(event);
+                monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.refreshPlayersOnMainBoard();
                 break;
             case PROPMPT_PLAYER_TO_BY_HOUSE:
+                mainBoardController.activatePlayer(monopolyClient.getPlayerManager().getPlayerByName(event.getPlayerName()).getPositionOnPlayerVBox(), true);
                 this.showBuyingHouseQuestion(event);
+                monopolyClient.refreshPlayers(monopolyClient.getGameName());
+                mainBoardController.refreshPlayersOnMainBoard();
                 break;
             case ASSET_BOUGHT:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());
@@ -174,6 +190,7 @@ public class ClientEngine {
                 } else {
                     mainBoardController.showMessage(event.getPaymentToPlayerName() + "Paid to " + event.getPlayerName() + " " + event.getPaymentAmount() + "$");
                 }
+                mainBoardController.refreshPlayersOnMainBoard();
                 break;
             case PLAYER_USED_GET_OUT_OF_JAIL_CARD:
                 monopolyClient.refreshPlayers(monopolyClient.getGameName());

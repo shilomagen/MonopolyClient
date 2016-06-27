@@ -7,6 +7,8 @@ import com.monopoly.client.player.PlayerManager;
 import com.monopoly.data.Card;
 import com.monopoly.utility.BoardConsts;
 import com.monopoly.utility.GameConstants;
+import java.io.File;
+import java.net.URL;
 import java.util.LinkedList;
 
 import org.xml.sax.SAXException;
@@ -91,7 +93,7 @@ public class MainBoardController {
         VBox playersVBox = this.mainBoard.getPlayersVBox();
         playersVBox.getChildren().clear();
         for (Player player : playersManager.getPlayers()) {
-            this.mainBoard.createPlayerProfile(playersVBox, player);
+            this.mainBoard.refreshPlayerProfile(playersVBox, player);
         }
     }
 
@@ -182,9 +184,12 @@ public class MainBoardController {
         Pane dicePane = this.mainBoard.getDicePane();
         ImageView firstDieImg = (ImageView) dicePane.getChildren().get(0);
         ImageView secondDieImg = (ImageView) dicePane.getChildren().get(1);
-
-        firstDieImg.setImage(new Image("file:src/com/monopoly/assets/dice/dice-" + firstDie + ".png"));
-        secondDieImg.setImage(new Image("file:src/com/monopoly/assets/dice/dice-" + secondDie + ".png"));
+        URL csdURL = MainBoard.class.getResource(File.separator + "com" + File.separator + "monopoly" + File.separator + "assets" + File.separator);
+        String firstDiceUrl = csdURL + GameConstants.DICE_DIR + File.separator + "dice-" + firstDie + ".png";
+        String seconedDiceUrl = csdURL + GameConstants.DICE_DIR + File.separator + "dice-" + secondDie + ".png";
+        
+        firstDieImg.setImage(new Image(firstDiceUrl));
+        secondDieImg.setImage(new Image(seconedDiceUrl));
 
     }
 
